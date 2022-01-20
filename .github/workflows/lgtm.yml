@@ -1,0 +1,19 @@
+on:
+  pull_request_review:
+    types:
+      - submitted
+
+jobs:
+  lgtm:
+    name: LGTM
+    runs-on: ubuntu-latest
+    if: github.event.review.state == 'approved'
+    steps:
+    - name: Cowsay LGTM
+      uses: anthonycuervo23/bonesay-action@v1.0.2
+      with:
+        message: 'LGTM'
+        cow: 'random'
+        cowsay_on_comment: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
