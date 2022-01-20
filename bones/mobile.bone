@@ -1,0 +1,31 @@
+##
+## bone
+##
+##
+$ballonOffset = 57
+$the_bone = <<EOB;
+                  .`",,,:,,,,,,,,,:^'                     $thoughts             
+             ."!I"'               .`Ii^                  $thoughts             
+          ':l".                       '!l'              $thoughts              
+        '+,.                            `}l.           $thoughts               
+      .>;.                                ~{.         $thoughts                
+     `].                                   '-        $thoughts                 
+    '-                                      :;      $thoughts                  
+   .1.                                       ']`   $thoughts                   
+   ]^                                         .). $thoughts                    
+  `}                                .^:>;^.   `{'                     
+  :^           ';?(|[!'            ^\/////\:   |.                     
+  l^          !////////>          .\////////^  !^                     
+  I^         ,//////////l         "/////////I  ;"
+  .-'        +//////////]         .\////////^  ?`                     
+   .).       ^//////////^          "///////I  ^[                      
+    .+`       "|//////1`            ."l<l".  "?.                      
+      :+^       `:ll,`                .!   '<,                        
+        ',:,,:"^^^`'.                  ),::`.                         
+               ...'`]"                .?                              
+                    '|.  .?   i'  ::  ^;                              
+                     ,;  ,/` `/: .(].`{.                              
+                      "II,.;;:.,;;.'"`   
+Powered by @!Cuervo#2233
+You can make one yourself at tastybone-say.herokuapp.com
+EOB
