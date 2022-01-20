@@ -1,0 +1,40 @@
+##
+## Hape
+##
+##
+$ballonOffset = 66
+$the_hape = <<EOH;
+                                                                   $thoughts
+                                                                  $thoughts
+                                                                 $thoughts
+                               _,w+=^^"""""^^==pww===._         $thoughts
+                            mM"            _=^         "w      $thoughts
+                           P ,    ^      ,^              T    
+                          [ ,  ,-     _=`       ,=^JJJ,,7,'_ 
+                          ] L       ,^     __-,m^   _   _ T/
+                           %L L-^--C   _,="  A   ,^AA! |AAw p
+                            ]^ /^""w`/`    ,E   {LMMMA][wMMA m
+                            " P   ,  ]     P   |"  oo [ [ oo ]b
+                           L |   _'m'F     V    '""Jw<-"`Yp?"''L
+                             ]  {  [@]      `"=w,A /^"""<   _,J]y
+                           L  _ '_  T L          b `"^^ / Pbw.__]L
+                            L  - _,aP N         ,         `_  _^`
+                             v        [        /               Y
+                              `"-..,_,^       A              '_
+                                     '_     _P                '   'L
+                                      L     P                  L    L
+                                     /     [        _,.----------- _!
+                                    /      $                         L
+                                    b      ]                       ,P
+                                    "_      Y_                    /
+                                     'L      L".               ,-]
+                                      L__   lMM" ` -.,,,..-wp     b
+                                     $ ^'PY#,L       ["%_    ` '`P""
+                                    [    v           'p  \
+                                ,-^  `=_  `v          ],  `
+                           _ ^          ".  `v_        ]Fw \
+                        ,-`                ", '0TFM^"""   T EY.
+                    _.^                       "w^w        /%b   "w_
+                   Powered by hapesay (rid#2535)
+
+EOH

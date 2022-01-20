@@ -91,37 +91,37 @@ func maxLen(bone []string) int {
 	return max
 }
 
-type cowLine struct {
+type boneLine struct {
 	raw      string
 	clusters []rune
 }
 
-func (c *cowLine) Len() int {
+func (c *boneLine) Len() int {
 	return len(c.clusters)
 }
 
-func (c *cowLine) Slice(i, j int) string {
+func (c *boneLine) Slice(i, j int) string {
 	if c.Len() == 0 {
 		return ""
 	}
 	return string(c.clusters[i:j])
 }
 
-func makeBoneLines(bone string) []*cowLine {
+func makeBoneLines(bone string) []*boneLine {
 	sep := strings.Split(bone, "\n")
-	cowLines := make([]*cowLine, len(sep))
+	boneLines := make([]*boneLine, len(sep))
 	for i, line := range sep {
 		g := uniseg.NewGraphemes(line)
 		clusters := make([]rune, 0)
 		for g.Next() {
 			clusters = append(clusters, g.Runes()...)
 		}
-		cowLines[i] = &cowLine{
+		boneLines[i] = &boneLine{
 			raw:      line,
 			clusters: clusters,
 		}
 	}
-	return cowLines
+	return boneLines
 }
 
 type renderer struct {
@@ -132,15 +132,15 @@ type renderer struct {
 	frames      chan string
 
 	saidBone         string
-	notSaidBoneLines []*cowLine
+	notSaidBoneLines []*boneLine
 
 	quit chan os.Signal
 }
 
 func newRenderer(saidBone, notSaidBone string) *renderer {
 	notSaidBoneSep := strings.Split(notSaidBone, "\n")
-	w, cowsWidth := screen.Width(), maxLen(notSaidBoneSep)
-	max := w + cowsWidth
+	w, bonesWidth := screen.Width(), maxLen(notSaidBoneSep)
+	max := w + bonesWidth
 
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM, syscall.SIGHUP)

@@ -28,7 +28,7 @@ func New(options ...Option) (*Bone, error) {
 		thoughts: '/',
 		typ: &BoneFile{
 			Name:         "default",
-			BasePath:     "cows",
+			BasePath:     "bones",
 			LocationType: InBinary,
 		},
 		ballonWidth: 40,
@@ -97,12 +97,12 @@ func adjustTo2Chars(s string) string {
 }
 
 func containBones(target string) (*BoneFile, error) {
-	cowPaths, err := Bones()
+	bonePaths, err := Bones()
 	if err != nil {
 		return nil, err
 	}
-	for _, cowPath := range cowPaths {
-		bonefile, ok := cowPath.Lookup(target)
+	for _, bonePath := range bonePaths {
+		bonefile, ok := bonePath.Lookup(target)
 		if ok {
 			return bonefile, nil
 		}
@@ -157,7 +157,7 @@ func Thoughts(thoughts rune) Option {
 	}
 }
 
-// Random specifies something .bone from cows directory
+// Random specifies something .bone from bones directory
 func Random() Option {
 	pick, err := pickBone()
 	return func(c *Bone) error {
@@ -170,18 +170,18 @@ func Random() Option {
 }
 
 func pickBone() (*BoneFile, error) {
-	cowPaths, err := Bones()
+	bonePaths, err := Bones()
 	if err != nil {
 		return nil, err
 	}
-	cowPath := cowPaths[rand.Intn(len(cowPaths))]
+	bonePath := bonePaths[rand.Intn(len(bonePaths))]
 
-	n := len(cowPath.BoneFiles)
-	bonefile := cowPath.BoneFiles[rand.Intn(n)]
+	n := len(bonePath.BoneFiles)
+	bonefile := bonePath.BoneFiles[rand.Intn(n)]
 	return &BoneFile{
 		Name:         bonefile,
-		BasePath:     cowPath.Name,
-		LocationType: cowPath.LocationType,
+		BasePath:     bonePath.Name,
+		LocationType: bonePath.LocationType,
 	}, nil
 }
 

@@ -58,10 +58,10 @@ done by *-e* and *-T* will be lost if one of the provided modes is used.
 The *-f* option specifies a particular bone picture file (``bonefile'') to
 use. If the bonefile spec contains '/' then it will be interpreted
 as a path relative to the current directory. Otherwise, bonesay
-will search the path specified in the *COWPATH* environment variable. If *-f -* is specified, provides
+will search the path specified in the *BONEPATH* environment variable. If *-f -* is specified, provides
 interactive Unix filter (command-line fuzzy finder) to search the bonefile.
 
-To list all bonefiles on the current *COWPATH*, invoke *bonesay* with the *-l* switch.
+To list all bonefiles on the current *BONEPATH*, invoke *bonesay* with the *-l* switch.
 
 *--random* pick randomly from available bonefiles
 
@@ -75,7 +75,7 @@ If the program is invoked as *bonethink* then the bone will think its message in
 
 BONEFILE FORMAT
 --------------
-A bonefile is made up of a simple block of *perl(1)* code, which assigns a picture of a bone to the variable *$the_cow*.
+A bonefile is made up of a simple block of *perl(1)* code, which assigns a picture of a bone to the variable *$the_bone*.
 Should you wish to customize the eyes or the tongue of the bone,
 then the variables *$eyes* and *$tongue* may be used. The trail leading up to the bone's message balloon is
 composed of the character(s) in the *$thoughts* variable. Any backslashes must be reduplicated to prevent interpolation.
@@ -84,14 +84,14 @@ must be backslashed because that is what Perl 5 expects.
 
 ENVIRONMENT
 -----------
-The COWPATH environment variable, if present, will be used to search
+The BONEPATH environment variable, if present, will be used to search
 for bonefiles.  It contains a colon-separated list of directories,
-much like *PATH or MANPATH*. It should always contain the */usr/local/share/cows*
+much like *PATH or MANPATH*. It should always contain the */usr/local/share/bones*
 directory, or at least a directory with a file called *default.bone* in it.
 
 FILES
 -----
-*%PREFIX%/share/cows* holds a sample set of bonefiles. If your *COWPATH* is not explicitly set, it automatically contains this directory.
+*%PREFIX%/share/bones* holds a sample set of bonefiles. If your *BONEPATH* is not explicitly set, it automatically contains this directory.
 
 BUGS
 ----

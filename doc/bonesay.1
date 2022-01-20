@@ -81,10 +81,10 @@ done by \fB\-e\fP and \fB\-T\fP will be lost if one of the provided modes is use
 The \fB\-f\fP option specifies a particular bone picture file (\(lqbonefile\(rq) to
 use. If the bonefile spec contains \fI/\fP then it will be interpreted
 as a path relative to the current directory. Otherwise, bonesay
-will search the path specified in the \fBCOWPATH\fP environment variable. If \fB\-f \-\fP is specified, provides
+will search the path specified in the \fBBONEPATH\fP environment variable. If \fB\-f \-\fP is specified, provides
 interactive Unix filter (command\-line fuzzy finder) to search the bonefile.
 .sp
-To list all bonefiles on the current \fBCOWPATH\fP, invoke \fBbonesay\fP with the \fB\-l\fP switch.
+To list all bonefiles on the current \fBBONEPATH\fP, invoke \fBbonesay\fP with the \fB\-l\fP switch.
 .sp
 \fB\-\-random\fP pick randomly from available bonefiles
 .sp
@@ -97,7 +97,7 @@ To list all bonefiles on the current \fBCOWPATH\fP, invoke \fBbonesay\fP with th
 If the program is invoked as \fBbonethink\fP then the bone will think its message instead of saying it.
 .SH "BONEFILE FORMAT"
 .sp
-A bonefile is made up of a simple block of \fBperl(1)\fP code, which assigns a picture of a bone to the variable \fB$the_cow\fP.
+A bonefile is made up of a simple block of \fBperl(1)\fP code, which assigns a picture of a bone to the variable \fB$the_bone\fP.
 Should you wish to customize the eyes or the tongue of the bone,
 then the variables \fB$eyes\fP and \fB$tongue\fP may be used. The trail leading up to the bone\(cqs message balloon is
 composed of the character(s) in the \fB$thoughts\fP variable. Any backslashes must be reduplicated to prevent interpolation.
@@ -105,13 +105,13 @@ The name of a bonefile should end with \fB.bone ,\fP otherwise it is assumed not
 must be backslashed because that is what Perl 5 expects.
 .SH "ENVIRONMENT"
 .sp
-The COWPATH environment variable, if present, will be used to search
+The BONEPATH environment variable, if present, will be used to search
 for bonefiles.  It contains a colon\-separated list of directories,
-much like \fBPATH or MANPATH\fP. It should always contain the \fB/usr/local/share/cows\fP
+much like \fBPATH or MANPATH\fP. It should always contain the \fB/usr/local/share/bones\fP
 directory, or at least a directory with a file called \fBdefault.bone\fP in it.
 .SH "FILES"
 .sp
-\fB%PREFIX%/share/cows\fP holds a sample set of bonefiles. If your \fBCOWPATH\fP is not explicitly set, it automatically contains this directory.
+\fB%PREFIX%/share/bones\fP holds a sample set of bonefiles. If your \fBBONEPATH\fP is not explicitly set, it automatically contains this directory.
 .SH "BUGS"
 .sp
 .URL "https://github.com/Code\-Hex/Neo\-bonesay" "" ""

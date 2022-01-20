@@ -14,15 +14,15 @@ import (
 
 func TestBones(t *testing.T) {
 	t.Run("no set BONEPATH env", func(t *testing.T) {
-		cowPaths, err := Bones()
+		bonePaths, err := Bones()
 		if err != nil {
 			t.Fatal(err)
 		}
-		if len(cowPaths) != 1 {
-			t.Fatalf("want 1, but got %d", len(cowPaths))
+		if len(bonePaths) != 1 {
+			t.Fatalf("want 1, but got %d", len(bonePaths))
 		}
-		cowPath := cowPaths[0]
-		if len(cowPath.BoneFiles) == 0 {
+		bonePath := bonePaths[0]
+		if len(bonePath.BoneFiles) == 0 {
 			t.Fatalf("no bonefiles")
 		}
 
@@ -30,25 +30,25 @@ func TestBones(t *testing.T) {
 			Name:         "bones",
 			LocationType: InBinary,
 		}
-		if diff := cmp.Diff(wantBonePath, cowPath,
+		if diff := cmp.Diff(wantBonePath, bonePath,
 			cmpopts.IgnoreFields(BonePath{}, "BoneFiles"),
 		); diff != "" {
 			t.Errorf("(-want, +got)\n%s", diff)
 		}
 	})
 
-	t.Run("set COWPATH env", func(t *testing.T) {
-		cowpath := filepath.Join("testdata", "testdir")
+	t.Run("set BONEPATH env", func(t *testing.T) {
+		bonepath := filepath.Join("testdata", "testdir")
 
-		os.Setenv("COWPATH", cowpath)
-		defer os.Unsetenv("COWPATH")
+		os.Setenv("BONEPATH", bonepath)
+		defer os.Unsetenv("BONEPATH")
 
-		cowPaths, err := Bones()
+		bonePaths, err := Bones()
 		if err != nil {
 			t.Fatal(err)
 		}
-		if len(cowPaths) != 2 {
-			t.Fatalf("want 2, but got %d", len(cowPaths))
+		if len(bonePaths) != 2 {
+			t.Fatalf("want 2, but got %d", len(bonePaths))
 		}
 
 		wants := []*BonePath{
@@ -61,26 +61,26 @@ func TestBones(t *testing.T) {
 				LocationType: InBinary,
 			},
 		}
-		if diff := cmp.Diff(wants, cowPaths,
+		if diff := cmp.Diff(wants, bonePaths,
 			cmpopts.IgnoreFields(BonePath{}, "BoneFiles"),
 		); diff != "" {
 			t.Errorf("(-want, +got)\n%s", diff)
 		}
 
-		if len(cowPaths[0].BoneFiles) != 1 {
+		if len(bonePaths[0].BoneFiles) != 1 {
 			t.Fatalf("unexpected bonefiles len = %d, %+v",
-				len(cowPaths[0].BoneFiles), cowPaths[0].BoneFiles,
+				len(bonePaths[0].BoneFiles), bonePaths[0].BoneFiles,
 			)
 		}
 
-		if cowPaths[0].BoneFiles[0] != "test" {
-			t.Fatalf("want %q but got %q", "test", cowPaths[0].BoneFiles[0])
+		if bonePaths[0].BoneFiles[0] != "test" {
+			t.Fatalf("want %q but got %q", "test", bonePaths[0].BoneFiles[0])
 		}
 	})
 
-	t.Run("set COWPATH env", func(t *testing.T) {
-		os.Setenv("COWPATH", "notfound")
-		defer os.Unsetenv("COWPATH")
+	t.Run("set BONEPATH env", func(t *testing.T) {
+		os.Setenv("BONEPATH", "notfound")
+		defer os.Unsetenv("BONEPATH")
 
 		_, err := Bones()
 		if err == nil {

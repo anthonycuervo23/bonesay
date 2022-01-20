@@ -27,7 +27,7 @@ much as the figlet program does, and it written in the same spirit
 of silliness.
 ```
 
-This is also supported `COWPATH` env. Please read more details in [#33](https://github.com/anthonycuervo23/bonesay/pull/33) if you want to use this.
+This is also supported `BONEPATH` env. Please read more details in [#33](https://github.com/anthonycuervo23/bonesay/pull/33) if you want to use this.
 
 ## What makes it different from the original?
 

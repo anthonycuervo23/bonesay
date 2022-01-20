@@ -7,18 +7,18 @@ import (
 )
 
 //go:embed_bones/*
-var cowsDir embed.FS
+var bonesDir embed.FS
 
 // Asset loads and returns the asset for the given name.
 // It returns an error if the asset could not be found or
 // could not be loaded.
 func Asset(path string) ([]byte, error) {
-	return cowsDir.ReadFile(path)
+	return bonesDir.ReadFile(path)
 }
 
 // AssetNames returns the list of filename of the assets.
 func AssetNames() []string {
-	entries, err := cowsDir.ReadDir("bones")
+	entries, err := bonesDir.ReadDir("bones")
 	if err != nil {
 		panic(err)
 	}
@@ -31,10 +31,10 @@ func AssetNames() []string {
 	return names
 }
 
-var cowsInBinary = AssetNames()
+var bonesInBinary = AssetNames()
 
 // BonesInBinary returns the list of bonefiles which are in binary.
 // the list is memoized.
 func BonesInBinary() []string {
-	return cowsInBinary
+	return bonesInBinary
 }

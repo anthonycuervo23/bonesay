@@ -24,25 +24,25 @@ func Say(phrase string, options ...Option) (string, error) {
 	return bone.Say(phrase)
 }
 
-// LocationType indicates the type of COWPATH.
+// LocationType indicates the type of BONEPATH.
 type LocationType int
 
 const (
-	// InBinary indicates the COWPATH in binary.
+	// InBinary indicates the BONEPATH in binary.
 	InBinary LocationType = iota
 
-	// InDirectory indicates the COWPATH in your directory.
+	// InDirectory indicates the BONEPATH in your directory.
 	InDirectory
 )
 
-// BonePath is information of the COWPATH.
+// BonePath is information of the BONEPATH.
 type BonePath struct {
-	// Name is name of the COWPATH.
-	// If you specified `COWPATH=/foo/bar`, Name is `/foo/bar`.
+	// Name is name of the BONEPATH.
+	// If you specified `BONEPATH=/foo/bar`, Name is `/foo/bar`.
 	Name string
 	// BoneFiles are name of the bonefile which are trimmed ".bone" suffix.
 	BoneFiles []string
-	// LocationType is the type of COWPATH
+	// LocationType is the type of BONEPATH
 	LocationType LocationType
 }
 
@@ -65,9 +65,9 @@ func (c *BonePath) Lookup(target string) (*BoneFile, bool) {
 type BoneFile struct {
 	// Name is name of the bonefile.
 	Name string
-	// BasePath is the path which the cowpath is in.
+	// BasePath is the path which the bonepath is in.
 	BasePath string
-	// LocationType is the type of COWPATH
+	// LocationType is the type of BONEPATH
 	LocationType LocationType
 }
 
@@ -84,25 +84,25 @@ func (c *BoneFile) ReadAll() ([]byte, error) {
 
 // Bones to get list of bones
 func Bones() ([]*BonePath, error) {
-	cowPaths, err := cowsFromBonePath()
+	bonePaths, err := bonesFromBonePath()
 	if err != nil {
 		return nil, err
 	}
-	cowPaths = append(cowPaths, &BonePath{
+	bonePaths = append(bonePaths, &BonePath{
 		Name:         "bones",
 		BoneFiles:    BonesInBinary(),
 		LocationType: InBinary,
 	})
-	return cowPaths, nil
+	return bonePaths, nil
 }
 
-func cowsFromBonePath() ([]*BonePath, error) {
-	cowPaths := make([]*BonePath, 0)
-	cowPath := os.Getenv("BONEATH")
-	if cowPath == "" {
-		return cowPaths, nil
+func bonesFromBonePath() ([]*BonePath, error) {
+	bonePaths := make([]*BonePath, 0)
+	bonePath := os.Getenv("BONEATH")
+	if bonePath == "" {
+		return bonePaths, nil
 	}
-	paths := splitPath(cowPath)
+	paths := splitPath(bonePath)
 	for _, path := range paths {
 		dirEntries, err := ioutil.ReadDir(path)
 		if err != nil {
@@ -121,9 +121,9 @@ func cowsFromBonePath() ([]*BonePath, error) {
 			}
 		}
 		sort.Strings(path.BoneFiles)
-		cowPaths = append(cowPaths, path)
+		bonePaths = append(bonePaths, path)
 	}
-	return cowPaths, nil
+	return bonePaths, nil
 }
 
 // GetBone to get bone's ascii art
