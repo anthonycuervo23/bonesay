@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-//go:embed bones/*
+//go:embed_bones/*
 var cowsDir embed.FS
 
 // Asset loads and returns the asset for the given name.

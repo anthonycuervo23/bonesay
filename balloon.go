@@ -90,11 +90,13 @@ func (cow *Cow) Balloon(phrase string) string {
 }
 
 func (cow *Cow) writeBallon(lines []*line, maxWidth int) {
-	top := make([]byte, 0, maxWidth+2)
-	bottom := make([]byte, 0, maxWidth+2)
+	top := make([]byte, 0)
+	bottom := make([]byte, 0)
 
-	top = append(top, ' ')
-	bottom = append(bottom, ' ')
+	for i := 0; i < 66; i++ {
+		top = append(top, ' ')
+		bottom = append(bottom, ' ')
+	}
 
 	for i := 0; i < maxWidth+2; i++ {
 		top = append(top, '_')
@@ -113,6 +115,9 @@ func (cow *Cow) writeBallon(lines []*line, maxWidth int) {
 	l := len(lines)
 	if l == 1 {
 		border := borderType.only
+		for i := 0; i < 65; i++ {
+			cow.buf.WriteRune(' ')
+		}
 		cow.buf.WriteRune(border[0])
 		cow.buf.WriteRune(' ')
 		cow.buf.WriteString(lines[0].text)
@@ -131,6 +136,9 @@ func (cow *Cow) writeBallon(lines []*line, maxWidth int) {
 			border = borderType.last
 		default:
 			border = borderType.middle
+		}
+		for i := 0; i < 65; i++ {
+			cow.buf.WriteRune(' ')
 		}
 		cow.buf.WriteRune(border[0])
 		cow.buf.WriteRune(' ')

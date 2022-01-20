@@ -24,7 +24,7 @@ func New(options ...Option) (*Cow, error) {
 	cow := &Cow{
 		eyes:     "oo",
 		tongue:   "  ",
-		thoughts: '\\',
+		thoughts: '/',
 		typ: &CowFile{
 			Name:         "default",
 			BasePath:     "cows",

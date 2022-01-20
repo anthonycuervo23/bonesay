@@ -3,7 +3,7 @@
 ##
 ##
 $ballonOffset = 102
-$the_hape = <<EOH;                                                                                        
+$the_hape = <<EOB;                                                                                        
                                           .`":i_}(()1{}}{{1(({->:^'                                    $thoughts
                                      '"<1|[~l:"^``````````````^^<\)|}I`.                              $thoughts
                                  ',_(-I,``````````````^:i+?]]?_<()\~^">(_^                            $thoughts
@@ -39,6 +39,6 @@ $the_hape = <<EOH;
                                               {(,^``_//:``^)/\"``;/\|"`"(-                
                                               .+\[-1{^l\??|<`_|_}),.I--i^                 
 
-Powered by @!Cuervo#2233
+Powered by bonesay @!Cuervo#2233
 You can make one yourself at... soon
-EOH
+EOB
