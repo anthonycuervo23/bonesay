@@ -15,7 +15,7 @@ func TestCLI_Run(t *testing.T) {
 		thinking bool
 	}{
 		{
-			name:     "cowsay",
+			name:     "bonesay",
 			thinking: false,
 		},
 		{

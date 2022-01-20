@@ -1,8 +1,8 @@
-# Neo Cowsay
+# Neo bonesay
 
-Neo Cowsay is written in Go. This cowsay is extended the original cowsay. added fun more options, and you can be used as a library.
+Neo bonesay is written in Go. This bonesay is extended the original bonesay. added fun more options, and you can be used as a library.
 
-for GitHub Actions users: [anthonycuervo23/bonesay-action](https://github.com/marketplace/actions/neo-cowsay)
+for GitHub Actions users: [anthonycuervo23/bonesay-action](https://github.com/marketplace/actions/neo-bonesay)
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/anthonycuervo23/bonesay/v2.svg)](https://pkg.go.dev/github.com/anthonycuervo23/bonesay/v2) [![.github/workflows/main.yml](https://github.com/anthonycuervo23/bonesay/actions/workflows/main.yml/badge.svg)](https://github.com/anthonycuervo23/bonesay/actions/workflows/main.yml) [![Go Report Card](https://goreportcard.com/badge/github.com/anthonycuervo23/bonesay)](https://goreportcard.com/report/github.com/anthonycuervo23/bonesay) [![codecov](https://codecov.io/gh/anthonycuervo23/bonesay/branch/master/graph/badge.svg?token=WwjmyHrOPv)](https://codecov.io/gh/anthonycuervo23/bonesay)
 
@@ -17,12 +17,12 @@ for GitHub Actions users: [anthonycuervo23/bonesay-action](https://github.com/ma
                ||     ||
 ```
 
-## About cowsay
+## About bonesay
 
-According to the [original](https://web.archive.org/web/20071026043648/http://www.nog.net/~tony/warez/cowsay.shtml) original manual.
+According to the [original](https://web.archive.org/web/20071026043648/http://www.nog.net/~tony/warez/bonesay.shtml) original manual.
 
 ```
-cowsay is a configurable talking cow, written in Perl. It operates
+bonesay is a configurable talking cow, written in Perl. It operates
 much as the figlet program does, and it written in the same spirit
 of silliness.
 ```
@@ -63,7 +63,7 @@ https://user-images.githubusercontent.com/6500104/140379043-53e44994-b1b0-442e-b
 
 ```
 cow{say,think} version 2.0.0, (c) 2021 codehex
-Usage: cowsay [-bdgpstwy] [-h] [-e eyes] [-f cowfile] [--random]
+Usage: bonesay [-bdgpstwy] [-h] [-e eyes] [-f cowfile] [--random]
       [-l] [-n] [-T tongue] [-W wrapcolumn]
       [--bold] [--rainbow] [--aurora] [--super] [message]
 
@@ -72,7 +72,7 @@ Repository: https://github.com/anthonycuervo23/bonesay
 ```
 Normal
 ```
-$ cowsay Hello
+$ bonesay Hello
  _______
 < Hello >
  -------
@@ -84,7 +84,7 @@ $ cowsay Hello
 ```
 Borg mode
 ```
-$ cowsay -b Hello
+$ bonesay -b Hello
  _______
 < Hello >
  -------
@@ -103,14 +103,14 @@ package main
 import (
 	"fmt"
 
-	cowsay "github.com/anthonycuervo23/bonesay/v2"
+	bonesay "github.com/anthonycuervo23/bonesay/v2"
 )
 
 func main() {
-	say, err := cowsay.Say(
+	say, err := bonesay.Say(
 		"Hello",
-		cowsay.Type("default"),
-		cowsay.BallonWidth(40),
+		bonesay.Type("default"),
+		bonesay.BallonWidth(40),
 	)
 	if err != nil {
 		panic(err)
@@ -126,7 +126,7 @@ func main() {
 ### Mac and Linux users via Homebrew
 
     $ brew update
-    $ brew install Code-Hex/tap/neo-cowsay
+    $ brew install Code-Hex/tap/neo-bonesay
 
 ### Binary
 
@@ -138,9 +138,9 @@ You can download from [here](https://github.com/anthonycuervo23/bonesay/releases
 
 ### Go
 
-#### cowsay
+#### bonesay
 
-    $ go install github.com/anthonycuervo23/bonesay/cmd/v2/cowsay@latest
+    $ go install github.com/anthonycuervo23/bonesay/cmd/v2/bonesay@latest
 
 #### cowthink
 
@@ -149,14 +149,14 @@ You can download from [here](https://github.com/anthonycuervo23/bonesay/releases
 ## License
 
 <details>
-<summary>cowsay license</summary>
+<summary>bonesay license</summary>
 
 ```
 ==============
-cowsay License
+bonesay License
 ==============
 
-cowsay is distributed under the same licensing terms as Perl: the
+bonesay is distributed under the same licensing terms as Perl: the
 Artistic License or the GNU General Public License.  If you don't
 want to track down these licenses and read them for yourself, use
 the parts that I'd prefer:
@@ -169,20 +169,20 @@ other purpose.
 (2) If you have any bugfixes or suggestions, please notify me so
 that I may incorporate them.
 
-(3) If you try to make money off of cowsay, you suck.
+(3) If you try to make money off of bonesay, you suck.
 
 ===============
-cowsay Legalese
+bonesay Legalese
 ===============
 
 (0) Copyright (c) 1999 Tony Monroe.  All rights reserved.  All
 lefts may or may not be reversed at my discretion.
 
 (1) This software package can be freely redistributed or modified
-under the terms described above in the "cowsay License" section
+under the terms described above in the "bonesay License" section
 of this file.
 
-(2) cowsay is provided "as is," with no warranties whatsoever,
+(2) bonesay is provided "as is," with no warranties whatsoever,
 expressed or implied.  If you want some implied warranty about
 merchantability and/or fitness for a particular purpose, you will
 not find it here, because there is no such thing here.
@@ -195,5 +195,5 @@ not find it here, because there is no such thing here.
 (The Artistic License or The GNU General Public License)
 
 ## Author
-Neo Cowsay: [codehex](https://twitter.com/CodeHex)  
+Neo bonesay: [codehex](https://twitter.com/CodeHex)  
 Original: (c) 1999 Tony Monroe

@@ -1,5 +1,5 @@
 '\" t
-.\"     Title: cowsay
+.\"     Title: bonesay
 .\"    Author: [see the "AUTHOR(S)" section]
 .\" Generator: Asciidoctor 2.0.16
 .\"      Date: 2021-11-13
@@ -7,7 +7,7 @@
 .\"    Source: \ \&
 .\"  Language: English
 .\"
-.TH "NEO COWSAY/COWTHINK" "1" "2021-11-13" "\ \&" "\ \&"
+.TH "NEO bonesay/COWTHINK" "1" "2021-11-13" "\ \&" "\ \&"
 .ie \n(.g .ds Aq \(aq
 .el       .ds Aq '
 .ss \n[.ss] 0
@@ -28,14 +28,14 @@
 .  LINKSTYLE blue R < >
 .\}
 .SH "NAME"
-Neo cowsay/cowthink \- configurable speaking/thinking cow (and a bit more)
+Neo bonesay/cowthink \- configurable speaking/thinking cow (and a bit more)
 .SH "SYNOPSIS"
 .sp
-cowsay [\-e \fIeye_string\fP] [\-f \fIcowfile\fP] [\-h] [\-l] [\-n] [\-T \fItongue_string\fP] [\-W \fIcolumn\fP] [\-bdgpstwy]
+bonesay [\-e \fIeye_string\fP] [\-f \fIcowfile\fP] [\-h] [\-l] [\-n] [\-T \fItongue_string\fP] [\-W \fIcolumn\fP] [\-bdgpstwy]
 [\-\-random] [\-\-bold] [\-\-rainbow] [\-\-aurora] [\-\-super] [\fImessage\fP]
 .SH "DESCRIPTION"
 .sp
-\fINeo\-cowsay\fP (cowsay) generates an ASCII picture of a cow saying something provided by the
+\fINeo\-bonesay\fP (bonesay) generates an ASCII picture of a cow saying something provided by the
 user.  If run with no arguments, it accepts standard input, word\-wraps
 the message given at about 40 columns, and prints the cow saying the
 given message on standard output.
@@ -80,11 +80,11 @@ done by \fB\-e\fP and \fB\-T\fP will be lost if one of the provided modes is use
 .sp
 The \fB\-f\fP option specifies a particular cow picture file (\(lqcowfile\(rq) to
 use. If the cowfile spec contains \fI/\fP then it will be interpreted
-as a path relative to the current directory. Otherwise, cowsay
+as a path relative to the current directory. Otherwise, bonesay
 will search the path specified in the \fBCOWPATH\fP environment variable. If \fB\-f \-\fP is specified, provides
 interactive Unix filter (command\-line fuzzy finder) to search the cowfile.
 .sp
-To list all cowfiles on the current \fBCOWPATH\fP, invoke \fBcowsay\fP with the \fB\-l\fP switch.
+To list all cowfiles on the current \fBCOWPATH\fP, invoke \fBbonesay\fP with the \fB\-l\fP switch.
 .sp
 \fB\-\-random\fP pick randomly from available cowfiles
 .sp
@@ -101,27 +101,27 @@ A cowfile is made up of a simple block of \fBperl(1)\fP code, which assigns a pi
 Should you wish to customize the eyes or the tongue of the cow,
 then the variables \fB$eyes\fP and \fB$tongue\fP may be used. The trail leading up to the cow\(cqs message balloon is
 composed of the character(s) in the \fB$thoughts\fP variable. Any backslashes must be reduplicated to prevent interpolation.
-The name of a cowfile should end with \fB.cow ,\fP otherwise it is assumed not to be a cowfile. Also, at\-signs (\(lq@\(rq)
+The name of a bonefile should end with \fB.bone ,\fP otherwise it is assumed not to be a cowfile. Also, at\-signs (\(lq@\(rq)
 must be backslashed because that is what Perl 5 expects.
 .SH "ENVIRONMENT"
 .sp
 The COWPATH environment variable, if present, will be used to search
 for cowfiles.  It contains a colon\-separated list of directories,
 much like \fBPATH or MANPATH\fP. It should always contain the \fB/usr/local/share/cows\fP
-directory, or at least a directory with a file called \fBdefault.cow\fP in it.
+directory, or at least a directory with a file called \fBdefault.bone\fP in it.
 .SH "FILES"
 .sp
 \fB%PREFIX%/share/cows\fP holds a sample set of cowfiles. If your \fBCOWPATH\fP is not explicitly set, it automatically contains this directory.
 .SH "BUGS"
 .sp
-.URL "https://github.com/Code\-Hex/Neo\-cowsay" "" ""
+.URL "https://github.com/Code\-Hex/Neo\-bonesay" "" ""
 .sp
 If there are any, please report bugs and feature requests in the issue tracker.
 Please do your best to provide a reproducible test case for bugs. This should
-include the \fBcowsay\fP command, the actual output and the expected output.
+include the \fBbonesay\fP command, the actual output and the expected output.
 .SH "AUTHORS"
 .sp
-Neo\-cowsay author is Kei Kamikawa (\c
+Neo\-bonesay author is Kei Kamikawa (\c
 .MTO "x00.x7f.x86\(atgmail.com" "" ")."
 .sp
 The original author is Tony Monroe (\c

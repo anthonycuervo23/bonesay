@@ -16,7 +16,7 @@ import (
 
 	"github.com/Code-Hex/go-wordwrap"
 	"github.com/anthonycuervo23/bonesay/cmd/v2/internal/super"
-	cowsay "github.com/anthonycuervo23/bonesay/v2"
+	bonesay "github.com/anthonycuervo23/bonesay/v2"
 	"github.com/anthonycuervo23/bonesay/v2/decoration"
 	"github.com/jessevdk/go-flags"
 	"github.com/ktr0731/go-fuzzyfinder"
@@ -74,7 +74,7 @@ func (c *CLI) program() string {
 	if c.Thinking {
 		return "cowthink"
 	}
-	return "cowsay"
+	return "bonesay"
 }
 
 // Run runs command-line.
@@ -95,7 +95,7 @@ func (c *CLI) Run(argv []string) int {
 	return 0
 }
 
-// mow will parsing for cowsay command line arguments and invoke cowsay.
+// mow will parsing for bonesay command line arguments and invoke bonesay.
 func (c *CLI) mow(argv []string) error {
 	var opts options
 	args, err := c.parseOptions(&opts, argv)
@@ -104,12 +104,12 @@ func (c *CLI) mow(argv []string) error {
 	}
 
 	if opts.List {
-		cowPaths, err := cowsay.Cows()
+		cowPaths, err := bonesay.Cows()
 		if err != nil {
 			return err
 		}
 		for _, cowPath := range cowPaths {
-			if cowPath.LocationType == cowsay.InBinary {
+			if cowPath.LocationType == bonesay.InBinary {
 				fmt.Fprintf(c.stdout, "Cow files in binary:\n")
 			} else {
 				fmt.Fprintf(c.stdout, "Cow files in %s:\n", cowPath.Name)
@@ -144,7 +144,7 @@ func (c *CLI) parseOptions(opts *options, argv []string) ([]string, error) {
 
 func (c *CLI) usage() []byte {
 	year := strconv.Itoa(time.Now().Year())
-	return []byte(c.program() + ` version ` + c.Version + `, (c) ` + year + ` codehex
+	return []byte(c.program() + ` version ` + c.Version + `, (c) ` + year + ` codehex + anthonycuervo23
 Usage: ` + c.program() + ` [-bdgpstwy] [-h] [-e eyes] [-f cowfile] [--random]
           [-l] [-n] [-T tongue] [-W wrapcolumn]
           [--bold] [--rainbow] [--aurora] [--super] [message]
@@ -153,8 +153,8 @@ Original Author: (c) 1999 Tony Monroe
 `)
 }
 
-func (c *CLI) generateOptions(opts *options) []cowsay.Option {
-	o := make([]cowsay.Option, 0, 8)
+func (c *CLI) generateOptions(opts *options) []bonesay.Option {
+	o := make([]bonesay.Option, 0, 8)
 	if opts.File == "-" {
 		cows := cowList()
 		idx, _ := fuzzyfinder.Find(cows, func(i int) string {
@@ -162,35 +162,35 @@ func (c *CLI) generateOptions(opts *options) []cowsay.Option {
 		})
 		opts.File = cows[idx]
 	}
-	o = append(o, cowsay.Type(opts.File))
+	o = append(o, bonesay.Type(opts.File))
 	if c.Thinking {
 		o = append(o,
-			cowsay.Thinking(),
-			cowsay.Thoughts('o'),
+			bonesay.Thinking(),
+			bonesay.Thoughts('o'),
 		)
 	}
 	if opts.Random {
-		o = append(o, cowsay.Random())
+		o = append(o, bonesay.Random())
 	}
 	if opts.Eyes != "" {
-		o = append(o, cowsay.Eyes(opts.Eyes))
+		o = append(o, bonesay.Eyes(opts.Eyes))
 	}
 	if opts.Tongue != "" {
-		o = append(o, cowsay.Tongue(opts.Tongue))
+		o = append(o, bonesay.Tongue(opts.Tongue))
 	}
 	if opts.Width > 0 {
-		o = append(o, cowsay.BallonWidth(uint(opts.Width)))
+		o = append(o, bonesay.BallonWidth(uint(opts.Width)))
 	}
 	if opts.NewLine {
-		o = append(o, cowsay.DisableWordWrap())
+		o = append(o, bonesay.DisableWordWrap())
 	}
 	return selectFace(opts, o)
 }
 
 func cowList() []string {
-	cows, err := cowsay.Cows()
+	cows, err := bonesay.Cows()
 	if err != nil {
-		return cowsay.CowsInBinary()
+		return bonesay.CowsInBinary()
 	}
 	list := make([]string, 0)
 	for _, cow := range cows {
@@ -218,11 +218,11 @@ func (c *CLI) mowmow(opts *options, args []string) error {
 		return super.RunSuperCow(phrase, opts.Bold, o...)
 	}
 
-	say, err := cowsay.Say(phrase, o...)
+	say, err := bonesay.Say(phrase, o...)
 	if err != nil {
-		var notfound *cowsay.NotFound
+		var notfound *bonesay.NotFound
 		if errors.As(err, &notfound) {
-			return fmt.Errorf("could not find %s cowfile", notfound.Cowfile)
+			return fmt.Errorf("could not find %s bonefile", notfound.Cowfile)
 		}
 		return err
 	}
@@ -245,47 +245,47 @@ func (c *CLI) mowmow(opts *options, args []string) error {
 	return nil
 }
 
-func selectFace(opts *options, o []cowsay.Option) []cowsay.Option {
+func selectFace(opts *options, o []bonesay.Option) []bonesay.Option {
 	switch {
 	case opts.Borg:
 		o = append(o,
-			cowsay.Eyes("=="),
-			cowsay.Tongue("  "),
+			bonesay.Eyes("=="),
+			bonesay.Tongue("  "),
 		)
 	case opts.Dead:
 		o = append(o,
-			cowsay.Eyes("xx"),
-			cowsay.Tongue("U "),
+			bonesay.Eyes("xx"),
+			bonesay.Tongue("U "),
 		)
 	case opts.Greedy:
 		o = append(o,
-			cowsay.Eyes("$$"),
-			cowsay.Tongue("  "),
+			bonesay.Eyes("$$"),
+			bonesay.Tongue("  "),
 		)
 	case opts.Paranoia:
 		o = append(o,
-			cowsay.Eyes("@@"),
-			cowsay.Tongue("  "),
+			bonesay.Eyes("@@"),
+			bonesay.Tongue("  "),
 		)
 	case opts.Stoned:
 		o = append(o,
-			cowsay.Eyes("**"),
-			cowsay.Tongue("U "),
+			bonesay.Eyes("**"),
+			bonesay.Tongue("U "),
 		)
 	case opts.Tired:
 		o = append(o,
-			cowsay.Eyes("--"),
-			cowsay.Tongue("  "),
+			bonesay.Eyes("--"),
+			bonesay.Tongue("  "),
 		)
 	case opts.Wired:
 		o = append(o,
-			cowsay.Eyes("OO"),
-			cowsay.Tongue("  "),
+			bonesay.Eyes("OO"),
+			bonesay.Tongue("  "),
 		)
 	case opts.Youthful:
 		o = append(o,
-			cowsay.Eyes(".."),
-			cowsay.Tongue("  "),
+			bonesay.Eyes(".."),
+			bonesay.Tongue("  "),
 		)
 	}
 	return o

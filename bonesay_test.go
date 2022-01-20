@@ -1,4 +1,4 @@
-package cowsay
+package bonesay
 
 import (
 	"bytes"
@@ -27,7 +27,7 @@ func TestCows(t *testing.T) {
 		}
 
 		wantCowPath := &CowPath{
-			Name:         "cows",
+			Name:         "bones",
 			LocationType: InBinary,
 		}
 		if diff := cmp.Diff(wantCowPath, cowPath,
@@ -57,7 +57,7 @@ func TestCows(t *testing.T) {
 				LocationType: InDirectory,
 			},
 			{
-				Name:         "cows",
+				Name:         "bones",
 				LocationType: InBinary,
 			},
 		}
@@ -141,7 +141,7 @@ func TestCowFile_ReadAll(t *testing.T) {
 
 	fromBinary := &CowFile{
 		Name:         "default",
-		BasePath:     "cows",
+		BasePath:     "bones",
 		LocationType: InBinary,
 	}
 	fromBinaryContent, err := fromBinary.ReadAll()
@@ -156,7 +156,7 @@ func TestCowFile_ReadAll(t *testing.T) {
 }
 
 const defaultSay = ` ________ 
-< cowsay >
+< bonesay >
  -------- 
         \   ^__^
          \  (oo)\_______
@@ -180,7 +180,7 @@ func TestSay(t *testing.T) {
 			args: args{
 				phrase: "hello!",
 			},
-			wantFile: "default.cow",
+			wantFile: "default.bone",
 			wantErr:  false,
 		},
 		{
@@ -191,7 +191,7 @@ func TestSay(t *testing.T) {
 					DisableWordWrap(),
 				},
 			},
-			wantFile: "nest.cow",
+			wantFile: "nest.bone",
 			wantErr:  false,
 		},
 		{

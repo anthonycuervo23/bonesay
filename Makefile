@@ -1,9 +1,9 @@
 .PHONY: build
-build: build/cowsay build/cowthink
+build: build/bonesay build/cowthink
 
-.PHONY: build/cowsay
-build/cowsay:
-	CGO_ENABLED=0 cd cmd && go build -o ../bin/cowsay -ldflags "-w -s" ./cowsay
+.PHONY: build/bonesay
+build/bonesay:
+	CGO_ENABLED=0 cd cmd && go build -o ../bin/bonesay -ldflags "-w -s" ./bonesay
 
 .PHONY: build/cowthink
 build/cowthink:
@@ -32,8 +32,8 @@ test/cli:
 
 .PHONY: man
 man:
-	asciidoctor --doctype manpage --backend manpage doc/cowsay.1.txt.tpl -o doc/cowsay.1
+	asciidoctor --doctype manpage --backend manpage doc/bonesay.1.txt.tpl -o doc/bonesay.1
 
 .PHONY: man/preview
 man/preview:
-	cat doc/cowsay.1 | groff -man -Tascii | less
+	cat doc/bonesay.1 | groff -man -Tascii | less

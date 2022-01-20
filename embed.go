@@ -1,4 +1,4 @@
-package cowsay
+package bonesay
 
 import (
 	"embed"
@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-//go:embed cows/*
+//go:embed bones/*
 var cowsDir embed.FS
 
 // Asset loads and returns the asset for the given name.
@@ -18,13 +18,13 @@ func Asset(path string) ([]byte, error) {
 
 // AssetNames returns the list of filename of the assets.
 func AssetNames() []string {
-	entries, err := cowsDir.ReadDir("cows")
+	entries, err := cowsDir.ReadDir("bones")
 	if err != nil {
 		panic(err)
 	}
 	names := make([]string, 0, len(entries))
 	for _, entry := range entries {
-		name := strings.TrimSuffix(entry.Name(), ".cow")
+		name := strings.TrimSuffix(entry.Name(), ".bone")
 		names = append(names, name)
 	}
 	sort.Strings(names)

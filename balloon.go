@@ -1,4 +1,4 @@
-package cowsay
+package bonesay
 
 import (
 	"fmt"

@@ -1,8 +1,8 @@
 builds:
-  - id: cowsay
+  - id: bonesay
     dir: cmd
-    main: ./cowsay/main.go
-    binary: cowsay
+    main: ./bonesay/main.go
+    binary: bonesay
     env:
       - CGO_ENABLED=0
     ldflags: -s -w -X main.version={{.Version}}
@@ -58,9 +58,9 @@ builds:
 
 archives:
 - builds:
-  - cowsay
+  - bonesay
   - cowthink
-  name_template: 'cowsay_{{ .Version }}_{{ .Os }}_{{ .Arch }}'
+  name_template: 'bonesay_{{ .Version }}_{{ .Os }}_{{ .Arch }}'
   replacements:
     darwin: macOS
     linux: Linux
@@ -72,38 +72,38 @@ archives:
     format: zip
   files:
   - LICENSE
-  - doc/cowsay.1
+  - doc/bonesay.1
 
 brews:
-- name: neo-cowsay
+- name: neo-bonesay
   tap:
     owner: Code-Hex
     name: homebrew-tap
     token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
   homepage: https://github.com/anthonycuervo23/bonesay
-  description: "Fast, funny, everyone wanted? new cowsay!!"
+  description: "Fast, funny, everyone wanted? new bonesay!!"
   folder: Formula
   install: |
-    bin.install "cowsay"
+    bin.install "bonesay"
     bin.install "cowthink"
-    man1.install Dir["doc/cowsay.1"]
+    man1.install Dir["doc/bonesay.1"]
 
 nfpms:
   - license: Artistic License 2.0
     maintainer: Kei Kamikawa <x00.x7f.x86@gmail.com>
     homepage: https://github.com/anthonycuervo23/bonesay
     bindir: /usr/local/bin
-    description: "Fast, funny, everyone wanted? new cowsay!!"
+    description: "Fast, funny, everyone wanted? new bonesay!!"
     formats:
       - apk
       - deb
       - rpm
     contents:
-      - src: "doc/cowsay.1"
-        dst: "/usr/share/man/man1/cowsay.1"
+      - src: "doc/bonesay.1"
+        dst: "/usr/share/man/man1/bonesay.1"
 
 checksum:
-  name_template: 'cowsay_checksums.txt'
+  name_template: 'bonesay_checksums.txt'
 
 changelog:
   sort: asc

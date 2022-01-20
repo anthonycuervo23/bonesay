@@ -1,7 +1,7 @@
 //go:build windows
 // +build windows
 
-package cowsay
+package bonesay
 
 import "strings"
 
