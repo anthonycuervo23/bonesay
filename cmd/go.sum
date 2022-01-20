@@ -10,6 +10,8 @@ github.com/anthonycuervo23/bonesay/v2 v2.0.11 h1:zWKk9O1yTIC1YdO9Hfw+VtU/g8rK9i5
 github.com/anthonycuervo23/bonesay/v2 v2.0.11/go.mod h1:7yskT0fm4CVsUdWhg6NNTtr41jQDVbiPvKm+X+2frFM=
 github.com/anthonycuervo23/bonesay/v2 v2.0.12 h1:EBqRzmSaUnaIEWdACkeAdI5pPxcpu2VnwTu80i8x74E=
 github.com/anthonycuervo23/bonesay/v2 v2.0.12/go.mod h1:7yskT0fm4CVsUdWhg6NNTtr41jQDVbiPvKm+X+2frFM=
+github.com/anthonycuervo23/bonesay/v2 v2.0.16 h1:XPodO1oDDZcjFO6CJtDenSasf3dJBifmUTECLyDedjM=
+github.com/anthonycuervo23/bonesay/v2 v2.0.16/go.mod h1:7yskT0fm4CVsUdWhg6NNTtr41jQDVbiPvKm+X+2frFM=
 github.com/gdamore/encoding v1.0.0 h1:+7OoQ1Bc6eTm5niUzBa0Ctsh6JbMW6Ra+YNuAtDBdko=
 github.com/gdamore/encoding v1.0.0/go.mod h1:alR0ol34c49FCSBLjhosxzcPHQbf2trDkoo5dl+VrEg=
 github.com/gdamore/tcell/v2 v2.4.0 h1:W6dxJEmaxYvhICFoTY3WrLLEXsQ11SaFnKGVEXW57KM=
