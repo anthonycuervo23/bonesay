@@ -15,8 +15,8 @@ type border struct {
 	only   [2]rune
 }
 
-func (cow *Cow) borderType() border {
-	if cow.thinking {
+func (bone *Bone) borderType() border {
+	if bone.thinking {
 		return border{
 			first:  [2]rune{'(', ')'},
 			middle: [2]rune{'(', ')'},
@@ -40,21 +40,21 @@ type line struct {
 
 type lines []*line
 
-func (cow *Cow) maxLineWidth(lines []*line) int {
+func (bone *Bone) maxLineWidth(lines []*line) int {
 	maxWidth := 0
 	for _, line := range lines {
 		if line.runeWidth > maxWidth {
 			maxWidth = line.runeWidth
 		}
-		if !cow.disableWordWrap && maxWidth > cow.ballonWidth {
-			return cow.ballonWidth
+		if !bone.disableWordWrap && maxWidth > bone.ballonWidth {
+			return bone.ballonWidth
 		}
 	}
 	return maxWidth
 }
 
-func (cow *Cow) getLines(phrase string) []*line {
-	text := cow.canonicalizePhrase(phrase)
+func (bone *Bone) getLines(phrase string) []*line {
+	text := bone.canonicalizePhrase(phrase)
 	lineTexts := strings.Split(text, "\n")
 	lines := make([]*line, 0, len(lineTexts))
 	for _, lineText := range lineTexts {
@@ -66,34 +66,34 @@ func (cow *Cow) getLines(phrase string) []*line {
 	return lines
 }
 
-func (cow *Cow) canonicalizePhrase(phrase string) string {
+func (bone *Bone) canonicalizePhrase(phrase string) string {
 	// Replace tab to 8 spaces
 	phrase = strings.Replace(phrase, "\t", "       ", -1)
 
-	if cow.disableWordWrap {
+	if bone.disableWordWrap {
 		return phrase
 	}
-	width := cow.ballonWidth
+	width := bone.ballonWidth
 	return wordwrap.WrapString(phrase, uint(width))
 }
 
 // Balloon to get the balloon and the string entered in the balloon.
-func (cow *Cow) Balloon(phrase string) string {
-	defer cow.buf.Reset()
+func (bone *Bone) Balloon(phrase string) string {
+	defer bone.buf.Reset()
 
-	lines := cow.getLines(phrase)
-	maxWidth := cow.maxLineWidth(lines)
+	lines := bone.getLines(phrase)
+	maxWidth := bone.maxLineWidth(lines)
 
-	cow.writeBallon(lines, maxWidth)
+	bone.writeBallon(lines, maxWidth)
 
-	return cow.buf.String()
+	return bone.buf.String()
 }
 
-func (cow *Cow) writeBallon(lines []*line, maxWidth int) {
+func (bone *Bone) writeBallon(lines []*line, maxWidth int) {
 	top := make([]byte, 0)
 	bottom := make([]byte, 0)
 
-	for i := 0; i < 66; i++ {
+	for i := 0; i < bone.balloonOffset; i++ {
 		top = append(top, ' ')
 		bottom = append(bottom, ' ')
 	}
@@ -103,27 +103,27 @@ func (cow *Cow) writeBallon(lines []*line, maxWidth int) {
 		bottom = append(bottom, '-')
 	}
 
-	borderType := cow.borderType()
+	borderType := bone.borderType()
 
-	cow.buf.Write(top)
-	cow.buf.Write([]byte{' ', '\n'})
+	bone.buf.Write(top)
+	bone.buf.Write([]byte{' ', '\n'})
 	defer func() {
-		cow.buf.Write(bottom)
-		cow.buf.Write([]byte{' ', '\n'})
+		bone.buf.Write(bottom)
+		bone.buf.Write([]byte{' ', '\n'})
 	}()
 
 	l := len(lines)
 	if l == 1 {
 		border := borderType.only
-		for i := 0; i < 65; i++ {
-			cow.buf.WriteRune(' ')
+		for i := 0; i < (bone.balloonOffset - 1); i++ {
+			bone.buf.WriteRune(' ')
 		}
-		cow.buf.WriteRune(border[0])
-		cow.buf.WriteRune(' ')
-		cow.buf.WriteString(lines[0].text)
-		cow.buf.WriteRune(' ')
-		cow.buf.WriteRune(border[1])
-		cow.buf.WriteRune('\n')
+		bone.buf.WriteRune(border[0])
+		bone.buf.WriteRune(' ')
+		bone.buf.WriteString(lines[0].text)
+		bone.buf.WriteRune(' ')
+		bone.buf.WriteRune(border[1])
+		bone.buf.WriteRune('\n')
 		return
 	}
 
@@ -137,19 +137,19 @@ func (cow *Cow) writeBallon(lines []*line, maxWidth int) {
 		default:
 			border = borderType.middle
 		}
-		for i := 0; i < 65; i++ {
-			cow.buf.WriteRune(' ')
+		for i := 0; i < (bone.balloonOffset - 1); i++ {
+			bone.buf.WriteRune(' ')
 		}
-		cow.buf.WriteRune(border[0])
-		cow.buf.WriteRune(' ')
-		cow.padding(lines[i], maxWidth)
-		cow.buf.WriteRune(' ')
-		cow.buf.WriteRune(border[1])
-		cow.buf.WriteRune('\n')
+		bone.buf.WriteRune(border[0])
+		bone.buf.WriteRune(' ')
+		bone.padding(lines[i], maxWidth)
+		bone.buf.WriteRune(' ')
+		bone.buf.WriteRune(border[1])
+		bone.buf.WriteRune('\n')
 	}
 }
 
-func (cow *Cow) flush(text, top, bottom fmt.Stringer) string {
+func (bone *Bone) flush(text, top, bottom fmt.Stringer) string {
 	return fmt.Sprintf(
 		"%s\n%s%s\n",
 		top.String(),
@@ -158,15 +158,15 @@ func (cow *Cow) flush(text, top, bottom fmt.Stringer) string {
 	)
 }
 
-func (cow *Cow) padding(line *line, maxWidth int) {
+func (bone *Bone) padding(line *line, maxWidth int) {
 	if maxWidth <= line.runeWidth {
-		cow.buf.WriteString(line.text)
+		bone.buf.WriteString(line.text)
 		return
 	}
 
-	cow.buf.WriteString(line.text)
+	bone.buf.WriteString(line.text)
 	l := maxWidth - line.runeWidth
 	for i := 0; i < l; i++ {
-		cow.buf.WriteRune(' ')
+		bone.buf.WriteRune(' ')
 	}
 }

@@ -27,7 +27,7 @@ func simple() {
 }
 
 func complex() {
-	cow, err := bonesay.New(
+	bone, err := bonesay.New(
 		bonesay.BallonWidth(40),
 		//bonesay.Thinking(),
 		bonesay.Random(),
@@ -35,7 +35,7 @@ func complex() {
 	if err != nil {
 		panic(err)
 	}
-	say, err := cow.Say("Hello")
+	say, err := bone.Say("Hello")
 	if err != nil {
 		panic(err)
 	}

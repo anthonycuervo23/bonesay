@@ -16,52 +16,52 @@ import (
 	"github.com/rivo/uniseg"
 )
 
-func getNoSaidCow(cow *bonesay.Cow, opts ...bonesay.Option) (string, error) {
+func getNoSaidBone(bone *bonesay.Bone, opts ...bonesay.Option) (string, error) {
 	opts = append(opts, bonesay.Thoughts(' '))
-	cow, err := cow.Clone(opts...)
+	bone, err := bone.Clone(opts...)
 	if err != nil {
 		return "", err
 	}
-	return cow.GetCow()
+	return bone.GetBone()
 }
 
-// RunSuperCow runs super cow mode animation on the your terminal
-func RunSuperCow(phrase string, withBold bool, opts ...bonesay.Option) error {
-	cow, err := bonesay.New(opts...)
+// RunSuperBone runs super bone mode animation on the your terminal
+func RunSuperBone(phrase string, withBold bool, opts ...bonesay.Option) error {
+	bone, err := bonesay.New(opts...)
 	if err != nil {
 		return err
 	}
-	balloon := cow.Balloon(phrase)
+	balloon := bone.Balloon(phrase)
 	blank := createBlankSpace(balloon)
 
-	said, err := cow.GetCow()
+	said, err := bone.GetBone()
 	if err != nil {
 		return err
 	}
 
-	notSaid, err := getNoSaidCow(cow, opts...)
+	notSaid, err := getNoSaidBone(bone, opts...)
 	if err != nil {
 		return err
 	}
 
-	saidCow := balloon + said
-	saidCowLines := strings.Count(saidCow, "\n") + 1
+	saidBone := balloon + said
+	saidBoneLines := strings.Count(saidBone, "\n") + 1
 
 	// When it is higher than the height of the terminal
 	h := screen.Height()
-	if saidCowLines > h {
+	if saidBoneLines > h {
 		return errors.New("too height messages")
 	}
 
-	notSaidCow := blank + notSaid
+	notSaidBone := blank + notSaid
 
-	renderer := newRenderer(saidCow, notSaidCow)
+	renderer := newRenderer(saidBone, notSaidBone)
 
 	screen.SaveState()
 	screen.HideCursor()
 	screen.Clear()
 
-	go renderer.createFrames(cow, withBold)
+	go renderer.createFrames(bone, withBold)
 
 	renderer.render()
 
@@ -80,9 +80,9 @@ func createBlankSpace(balloon string) string {
 	return buf.String()
 }
 
-func maxLen(cow []string) int {
+func maxLen(bone []string) int {
 	max := 0
-	for _, line := range cow {
+	for _, line := range bone {
 		l := runewidth.StringWidth(line)
 		if max < l {
 			max = l
@@ -107,8 +107,8 @@ func (c *cowLine) Slice(i, j int) string {
 	return string(c.clusters[i:j])
 }
 
-func makeCowLines(cow string) []*cowLine {
-	sep := strings.Split(cow, "\n")
+func makeBoneLines(bone string) []*cowLine {
+	sep := strings.Split(bone, "\n")
 	cowLines := make([]*cowLine, len(sep))
 	for i, line := range sep {
 		g := uniseg.NewGraphemes(line)
@@ -131,29 +131,29 @@ type renderer struct {
 	heightDiff  int
 	frames      chan string
 
-	saidCow         string
-	notSaidCowLines []*cowLine
+	saidBone         string
+	notSaidBoneLines []*cowLine
 
 	quit chan os.Signal
 }
 
-func newRenderer(saidCow, notSaidCow string) *renderer {
-	notSaidCowSep := strings.Split(notSaidCow, "\n")
-	w, cowsWidth := screen.Width(), maxLen(notSaidCowSep)
+func newRenderer(saidBone, notSaidBone string) *renderer {
+	notSaidBoneSep := strings.Split(notSaidBone, "\n")
+	w, cowsWidth := screen.Width(), maxLen(notSaidBoneSep)
 	max := w + cowsWidth
 
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM, syscall.SIGHUP)
 
 	return &renderer{
-		max:             max,
-		middle:          max / 2,
-		screenWidth:     w,
-		heightDiff:      screen.Height() - strings.Count(saidCow, "\n") - 1,
-		frames:          make(chan string, max),
-		saidCow:         saidCow,
-		notSaidCowLines: makeCowLines(notSaidCow),
-		quit:            quit,
+		max:              max,
+		middle:           max / 2,
+		screenWidth:      w,
+		heightDiff:       screen.Height() - strings.Count(saidBone, "\n") - 1,
+		frames:           make(chan string, max),
+		saidBone:         saidBone,
+		notSaidBoneLines: makeBoneLines(notSaidBone),
+		quit:             quit,
 	}
 }
 
@@ -165,7 +165,7 @@ const (
 	standup = 3 * time.Second
 )
 
-func (r *renderer) createFrames(cow *bonesay.Cow, withBold bool) {
+func (r *renderer) createFrames(bone *bonesay.Bone, withBold bool) {
 	const times = standup / span
 	w := r.newWriter(withBold)
 
@@ -174,9 +174,9 @@ func (r *renderer) createFrames(cow *bonesay.Cow, withBold bool) {
 			w.SetPosx(r.posX(i))
 			for k := 0; k < int(times); k++ {
 				base := x * 70
-				// draw colored cow
+				// draw colored bone
 				w.SetColorSeq(base)
-				w.WriteString(r.saidCow)
+				w.WriteString(r.saidBone)
 				r.frames <- w.String()
 				if k%magic == 0 {
 					x++
@@ -187,7 +187,7 @@ func (r *renderer) createFrames(cow *bonesay.Cow, withBold bool) {
 			w.SetPosx(r.posX(i))
 			w.SetColorSeq(base)
 
-			for _, line := range r.notSaidCowLines {
+			for _, line := range r.notSaidBoneLines {
 				if i > r.screenWidth {
 					// Left side animations
 					n := i - r.screenWidth

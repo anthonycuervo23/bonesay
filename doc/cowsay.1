@@ -7,7 +7,7 @@
 .\"    Source: \ \&
 .\"  Language: English
 .\"
-.TH "NEO bonesay/COWTHINK" "1" "2021-11-13" "\ \&" "\ \&"
+.TH "NEO bonesay/BONETHINK" "1" "2021-11-13" "\ \&" "\ \&"
 .ie \n(.g .ds Aq \(aq
 .el       .ds Aq '
 .ss \n[.ss] 0
@@ -28,21 +28,21 @@
 .  LINKSTYLE blue R < >
 .\}
 .SH "NAME"
-Neo bonesay/cowthink \- configurable speaking/thinking cow (and a bit more)
+Neo bonesay/bonethink \- configurable speaking/thinking bone (and a bit more)
 .SH "SYNOPSIS"
 .sp
-bonesay [\-e \fIeye_string\fP] [\-f \fIcowfile\fP] [\-h] [\-l] [\-n] [\-T \fItongue_string\fP] [\-W \fIcolumn\fP] [\-bdgpstwy]
+bonesay [\-e \fIeye_string\fP] [\-f \fIbonefile\fP] [\-h] [\-l] [\-n] [\-T \fItongue_string\fP] [\-W \fIcolumn\fP] [\-bdgpstwy]
 [\-\-random] [\-\-bold] [\-\-rainbow] [\-\-aurora] [\-\-super] [\fImessage\fP]
 .SH "DESCRIPTION"
 .sp
-\fINeo\-bonesay\fP (bonesay) generates an ASCII picture of a cow saying something provided by the
+\fINeo\-bonesay\fP (bonesay) generates an ASCII picture of a bone saying something provided by the
 user.  If run with no arguments, it accepts standard input, word\-wraps
-the message given at about 40 columns, and prints the cow saying the
+the message given at about 40 columns, and prints the bone saying the
 given message on standard output.
 .sp
 To aid in the use of arbitrary messages with arbitrary whitespace,
 use the \fB\-n\fP option.  If it is specified, the given message will not be
-word\-wrapped.  This is possibly useful if you want to make the cow
+word\-wrapped.  This is possibly useful if you want to make the bone
 think or speak in figlet(6).  If \fB\-n\fP is specified, there must not be any command\-line arguments left
 after all the switches have been processed.
 .sp
@@ -50,68 +50,68 @@ The \fB\-W\fP specifies roughly (where the message should be wrapped. The defaul
 is equivalent to \fB\-W 40\fP i.e. wrap words at or before the 40th column.
 .sp
 If any command\-line arguments are left over after all switches have
-been processed, they become the cow\(cqs message. The program will not
+been processed, they become the bone\(cqs message. The program will not
 accept standard input for a message in this case.
 .sp
 There are several provided modes which change the appearance of the
-cow depending on its particular emotional/physical state.
+bone depending on its particular emotional/physical state.
 .sp
 The \fB\-b\fP option initiates Borg mode
 .sp
-\fB\-d\fP causes the cow to appear dead
+\fB\-d\fP causes the bone to appear dead
 .sp
 \fB\-g\fP invokes greedy mode
 .sp
-\fB\-p\fP causes a state of paranoia to come over the cow
+\fB\-p\fP causes a state of paranoia to come over the bone
 .sp
-\fB\-s\fP makes the cow appear thoroughly stoned
+\fB\-s\fP makes the bone appear thoroughly stoned
 .sp
-\fB\-t\fP yields a tired cow
+\fB\-t\fP yields a tired bone
 .sp
 \fB\-w\fP is somewhat the opposite of \fB\-t\fP and initiates wired mode
 .sp
-\fB\-y\fP brings on the cow\(cqs youthful appearance.
+\fB\-y\fP brings on the bone\(cqs youthful appearance.
 .sp
-The user may specify the \fB\-e\fP option to select the appearance of the cow\(cqs eyes, in which case
+The user may specify the \fB\-e\fP option to select the appearance of the bone\(cqs eyes, in which case
 the first two characters of the argument string \fIeye_string\fP will be used. The default eyes are \fIoo\fP. The tongue is similarly
 configurable through \fB\-T\fP and \fItongue_string\fP; it must be two characters and does not appear by default. However,
 it does appear in the \fIdead\fP and \fIstoned\fP modes. Any configuration
 done by \fB\-e\fP and \fB\-T\fP will be lost if one of the provided modes is used.
 .sp
-The \fB\-f\fP option specifies a particular cow picture file (\(lqcowfile\(rq) to
-use. If the cowfile spec contains \fI/\fP then it will be interpreted
+The \fB\-f\fP option specifies a particular bone picture file (\(lqbonefile\(rq) to
+use. If the bonefile spec contains \fI/\fP then it will be interpreted
 as a path relative to the current directory. Otherwise, bonesay
 will search the path specified in the \fBCOWPATH\fP environment variable. If \fB\-f \-\fP is specified, provides
-interactive Unix filter (command\-line fuzzy finder) to search the cowfile.
+interactive Unix filter (command\-line fuzzy finder) to search the bonefile.
 .sp
-To list all cowfiles on the current \fBCOWPATH\fP, invoke \fBbonesay\fP with the \fB\-l\fP switch.
+To list all bonefiles on the current \fBCOWPATH\fP, invoke \fBbonesay\fP with the \fB\-l\fP switch.
 .sp
-\fB\-\-random\fP pick randomly from available cowfiles
+\fB\-\-random\fP pick randomly from available bonefiles
 .sp
 \fB\-\-bold\fP outputs as bold text
 .sp
-\fB\-\-rainbow\fP and \fB\-\-aurora\fP filters with colors an ASCII picture of a cow saying something
+\fB\-\-rainbow\fP and \fB\-\-aurora\fP filters with colors an ASCII picture of a bone saying something
 .sp
 \fB\-\-super\fP ...enjoy!
 .sp
-If the program is invoked as \fBcowthink\fP then the cow will think its message instead of saying it.
-.SH "COWFILE FORMAT"
+If the program is invoked as \fBbonethink\fP then the bone will think its message instead of saying it.
+.SH "BONEFILE FORMAT"
 .sp
-A cowfile is made up of a simple block of \fBperl(1)\fP code, which assigns a picture of a cow to the variable \fB$the_cow\fP.
-Should you wish to customize the eyes or the tongue of the cow,
-then the variables \fB$eyes\fP and \fB$tongue\fP may be used. The trail leading up to the cow\(cqs message balloon is
+A bonefile is made up of a simple block of \fBperl(1)\fP code, which assigns a picture of a bone to the variable \fB$the_cow\fP.
+Should you wish to customize the eyes or the tongue of the bone,
+then the variables \fB$eyes\fP and \fB$tongue\fP may be used. The trail leading up to the bone\(cqs message balloon is
 composed of the character(s) in the \fB$thoughts\fP variable. Any backslashes must be reduplicated to prevent interpolation.
-The name of a bonefile should end with \fB.bone ,\fP otherwise it is assumed not to be a cowfile. Also, at\-signs (\(lq@\(rq)
+The name of a bonefile should end with \fB.bone ,\fP otherwise it is assumed not to be a bonefile. Also, at\-signs (\(lq@\(rq)
 must be backslashed because that is what Perl 5 expects.
 .SH "ENVIRONMENT"
 .sp
 The COWPATH environment variable, if present, will be used to search
-for cowfiles.  It contains a colon\-separated list of directories,
+for bonefiles.  It contains a colon\-separated list of directories,
 much like \fBPATH or MANPATH\fP. It should always contain the \fB/usr/local/share/cows\fP
 directory, or at least a directory with a file called \fBdefault.bone\fP in it.
 .SH "FILES"
 .sp
-\fB%PREFIX%/share/cows\fP holds a sample set of cowfiles. If your \fBCOWPATH\fP is not explicitly set, it automatically contains this directory.
+\fB%PREFIX%/share/cows\fP holds a sample set of bonefiles. If your \fBCOWPATH\fP is not explicitly set, it automatically contains this directory.
 .SH "BUGS"
 .sp
 .URL "https://github.com/Code\-Hex/Neo\-bonesay" "" ""

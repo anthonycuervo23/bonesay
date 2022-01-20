@@ -6,26 +6,27 @@ import (
 	"strings"
 )
 
-// Cow struct!!
-type Cow struct {
+// Bone struct!!
+type Bone struct {
 	eyes            string
 	tongue          string
-	typ             *CowFile
+	typ             *BoneFile
 	thoughts        rune
 	thinking        bool
 	ballonWidth     int
 	disableWordWrap bool
+	balloonOffset   int
 
 	buf strings.Builder
 }
 
-// New returns pointer of Cow struct that made by options
-func New(options ...Option) (*Cow, error) {
-	cow := &Cow{
+// New returns pointer of Bone struct that made by options
+func New(options ...Option) (*Bone, error) {
+	bone := &Bone{
 		eyes:     "oo",
 		tongue:   "  ",
 		thoughts: '/',
-		typ: &CowFile{
+		typ: &BoneFile{
 			Name:         "default",
 			BasePath:     "cows",
 			LocationType: InBinary,
@@ -33,28 +34,28 @@ func New(options ...Option) (*Cow, error) {
 		ballonWidth: 40,
 	}
 	for _, o := range options {
-		if err := o(cow); err != nil {
+		if err := o(bone); err != nil {
 			return nil, err
 		}
 	}
-	return cow, nil
+	return bone, nil
 }
 
-// Say returns string that said by cow
-func (cow *Cow) Say(phrase string) (string, error) {
-	mow, err := cow.GetCow()
+// Say returns string that said by bone
+func (bone *Bone) Say(phrase string) (string, error) {
+	mow, err := bone.GetBone()
 	if err != nil {
 		return "", err
 	}
-	return cow.Balloon(phrase) + mow, nil
+	return bone.Balloon(phrase) + mow, nil
 }
 
-// Clone returns a copy of cow.
+// Clone returns a copy of bone.
 //
 // If any options are specified, they will be reflected.
-func (cow *Cow) Clone(options ...Option) (*Cow, error) {
-	ret := new(Cow)
-	*ret = *cow
+func (bone *Bone) Clone(options ...Option) (*Bone, error) {
+	ret := new(Bone)
+	*ret = *bone
 	ret.buf.Reset()
 	for _, o := range options {
 		if err := o(ret); err != nil {
@@ -65,12 +66,12 @@ func (cow *Cow) Clone(options ...Option) (*Cow, error) {
 }
 
 // Option defined for Options
-type Option func(*Cow) error
+type Option func(*Bone) error
 
 // Eyes specifies eyes
 // The specified string will always be adjusted to be equal to two characters.
 func Eyes(s string) Option {
-	return func(c *Cow) error {
+	return func(c *Bone) error {
 		c.eyes = adjustTo2Chars(s)
 		return nil
 	}
@@ -79,7 +80,7 @@ func Eyes(s string) Option {
 // Tongue specifies tongue
 // The specified string will always be adjusted to be less than or equal to two characters.
 func Tongue(s string) Option {
-	return func(c *Cow) error {
+	return func(c *Bone) error {
 		c.tongue = adjustTo2Chars(s)
 		return nil
 	}
@@ -95,52 +96,52 @@ func adjustTo2Chars(s string) string {
 	return "  "
 }
 
-func containCows(target string) (*CowFile, error) {
-	cowPaths, err := Cows()
+func containBones(target string) (*BoneFile, error) {
+	cowPaths, err := Bones()
 	if err != nil {
 		return nil, err
 	}
 	for _, cowPath := range cowPaths {
-		cowfile, ok := cowPath.Lookup(target)
+		bonefile, ok := cowPath.Lookup(target)
 		if ok {
-			return cowfile, nil
+			return bonefile, nil
 		}
 	}
 	return nil, nil
 }
 
-// NotFound is indicated not found the cowfile.
+// NotFound is indicated not found the bonefile.
 type NotFound struct {
-	Cowfile string
+	Bonefile string
 }
 
 var _ error = (*NotFound)(nil)
 
 func (n *NotFound) Error() string {
-	return fmt.Sprintf("not found %q cowfile", n.Cowfile)
+	return fmt.Sprintf("not found %q bonefile", n.Bonefile)
 }
 
-// Type specify name of the cowfile
+// Type specify name of the bonefile
 func Type(s string) Option {
 	if s == "" {
 		s = "default"
 	}
-	return func(c *Cow) error {
-		cowfile, err := containCows(s)
+	return func(c *Bone) error {
+		bonefile, err := containBones(s)
 		if err != nil {
 			return err
 		}
-		if cowfile != nil {
-			c.typ = cowfile
+		if bonefile != nil {
+			c.typ = bonefile
 			return nil
 		}
-		return &NotFound{Cowfile: s}
+		return &NotFound{Bonefile: s}
 	}
 }
 
 // Thinking enables thinking mode
 func Thinking() Option {
-	return func(c *Cow) error {
+	return func(c *Bone) error {
 		c.thinking = true
 		return nil
 	}
@@ -148,9 +149,9 @@ func Thinking() Option {
 
 // Thoughts Thoughts allows you to specify
 // the rune that will be drawn between
-// the speech bubbles and the cow
+// the speech bubbles and the bone
 func Thoughts(thoughts rune) Option {
-	return func(c *Cow) error {
+	return func(c *Bone) error {
 		c.thoughts = thoughts
 		return nil
 	}
@@ -158,8 +159,8 @@ func Thoughts(thoughts rune) Option {
 
 // Random specifies something .bone from cows directory
 func Random() Option {
-	pick, err := pickCow()
-	return func(c *Cow) error {
+	pick, err := pickBone()
+	return func(c *Bone) error {
 		if err != nil {
 			return err
 		}
@@ -168,17 +169,17 @@ func Random() Option {
 	}
 }
 
-func pickCow() (*CowFile, error) {
-	cowPaths, err := Cows()
+func pickBone() (*BoneFile, error) {
+	cowPaths, err := Bones()
 	if err != nil {
 		return nil, err
 	}
 	cowPath := cowPaths[rand.Intn(len(cowPaths))]
 
-	n := len(cowPath.CowFiles)
-	cowfile := cowPath.CowFiles[rand.Intn(n)]
-	return &CowFile{
-		Name:         cowfile,
+	n := len(cowPath.BoneFiles)
+	bonefile := cowPath.BoneFiles[rand.Intn(n)]
+	return &BoneFile{
+		Name:         bonefile,
 		BasePath:     cowPath.Name,
 		LocationType: cowPath.LocationType,
 	}, nil
@@ -186,7 +187,7 @@ func pickCow() (*CowFile, error) {
 
 // BallonWidth specifies ballon size
 func BallonWidth(size uint) Option {
-	return func(c *Cow) error {
+	return func(c *Bone) error {
 		c.ballonWidth = int(size)
 		return nil
 	}
@@ -195,7 +196,7 @@ func BallonWidth(size uint) Option {
 // DisableWordWrap disables word wrap.
 // Ignoring width of the ballon.
 func DisableWordWrap() Option {
-	return func(c *Cow) error {
+	return func(c *Bone) error {
 		c.disableWordWrap = true
 		return nil
 	}

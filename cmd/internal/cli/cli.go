@@ -72,7 +72,7 @@ type CLI struct {
 
 func (c *CLI) program() string {
 	if c.Thinking {
-		return "cowthink"
+		return "bonethink"
 	}
 	return "bonesay"
 }
@@ -104,17 +104,17 @@ func (c *CLI) mow(argv []string) error {
 	}
 
 	if opts.List {
-		cowPaths, err := bonesay.Cows()
+		bonePaths, err := bonesay.Bones()
 		if err != nil {
 			return err
 		}
-		for _, cowPath := range cowPaths {
-			if cowPath.LocationType == bonesay.InBinary {
-				fmt.Fprintf(c.stdout, "Cow files in binary:\n")
+		for _, bonePath := range bonePaths {
+			if bonePath.LocationType == bonesay.InBinary {
+				fmt.Fprintf(c.stdout, "Bone files in binary:\n")
 			} else {
-				fmt.Fprintf(c.stdout, "Cow files in %s:\n", cowPath.Name)
+				fmt.Fprintf(c.stdout, "Bone files in %s:\n", bonePath.Name)
 			}
-			fmt.Fprintln(c.stdout, wordwrap.WrapString(strings.Join(cowPath.CowFiles, " "), 80))
+			fmt.Fprintln(c.stdout, wordwrap.WrapString(strings.Join(bonePath.BoneFiles, " "), 80))
 			fmt.Fprintln(c.stdout)
 		}
 		return nil
@@ -145,7 +145,7 @@ func (c *CLI) parseOptions(opts *options, argv []string) ([]string, error) {
 func (c *CLI) usage() []byte {
 	year := strconv.Itoa(time.Now().Year())
 	return []byte(c.program() + ` version ` + c.Version + `, (c) ` + year + ` codehex + anthonycuervo23
-Usage: ` + c.program() + ` [-bdgpstwy] [-h] [-e eyes] [-f cowfile] [--random]
+Usage: ` + c.program() + ` [-bdgpstwy] [-h] [-e eyes] [-f bonefile] [--random]
           [-l] [-n] [-T tongue] [-W wrapcolumn]
           [--bold] [--rainbow] [--aurora] [--super] [message]
 
@@ -156,11 +156,11 @@ Original Author: (c) 1999 Tony Monroe
 func (c *CLI) generateOptions(opts *options) []bonesay.Option {
 	o := make([]bonesay.Option, 0, 8)
 	if opts.File == "-" {
-		cows := cowList()
-		idx, _ := fuzzyfinder.Find(cows, func(i int) string {
-			return cows[i]
+		bones := boneList()
+		idx, _ := fuzzyfinder.Find(bones, func(i int) string {
+			return bones[i]
 		})
-		opts.File = cows[idx]
+		opts.File = bones[idx]
 	}
 	o = append(o, bonesay.Type(opts.File))
 	if c.Thinking {
@@ -187,14 +187,14 @@ func (c *CLI) generateOptions(opts *options) []bonesay.Option {
 	return selectFace(opts, o)
 }
 
-func cowList() []string {
-	cows, err := bonesay.Cows()
+func boneList() []string {
+	bones, err := bonesay.Bones()
 	if err != nil {
-		return bonesay.CowsInBinary()
+		return bonesay.BonesInBinary()
 	}
 	list := make([]string, 0)
-	for _, cow := range cows {
-		list = append(list, cow.CowFiles...)
+	for _, bone := range bones {
+		list = append(list, bone.BoneFiles...)
 	}
 	return list
 }
@@ -215,14 +215,14 @@ func (c *CLI) mowmow(opts *options, args []string) error {
 	phrase := c.phrase(opts, args)
 	o := c.generateOptions(opts)
 	if opts.Super {
-		return super.RunSuperCow(phrase, opts.Bold, o...)
+		return super.RunSuperBone(phrase, opts.Bold, o...)
 	}
 
 	say, err := bonesay.Say(phrase, o...)
 	if err != nil {
 		var notfound *bonesay.NotFound
 		if errors.As(err, &notfound) {
-			return fmt.Errorf("could not find %s bonefile", notfound.Cowfile)
+			return fmt.Errorf("could not find %s bonefile", notfound.Bonefile)
 		}
 		return err
 	}

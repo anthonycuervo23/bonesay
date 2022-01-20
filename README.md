@@ -1,4 +1,4 @@
-# Neo bonesay
+# bonesay
 
 Neo bonesay is written in Go. This bonesay is extended the original bonesay. added fun more options, and you can be used as a library.
 
@@ -8,7 +8,7 @@ for GitHub Actions users: [anthonycuervo23/bonesay-action](https://github.com/ma
 
 ```
  ______________
-< I'm Neo cows >
+< I'm Neo bones >
  --------------
        \   ^__^
         \  (oo)\_______
@@ -22,7 +22,7 @@ for GitHub Actions users: [anthonycuervo23/bonesay-action](https://github.com/ma
 According to the [original](https://web.archive.org/web/20071026043648/http://www.nog.net/~tony/warez/bonesay.shtml) original manual.
 
 ```
-bonesay is a configurable talking cow, written in Perl. It operates
+bonesay is a configurable talking bone, written in Perl. It operates
 much as the figlet program does, and it written in the same spirit
 of silliness.
 ```
@@ -33,10 +33,10 @@ This is also supported `COWPATH` env. Please read more details in [#33](https://
 
 - fast
 - utf8 is supported
-- new some cowfiles is added
-- cowfiles in binary
-- random pickup cowfile option
-- provides command-line fuzzy finder to search any cows with `-f -` [#39](https://github.com/anthonycuervo23/bonesay/pull/39)
+- new some bonefiles is added
+- bonefiles in binary
+- random pickup bonefile option
+- provides command-line fuzzy finder to search any bones with `-f -` [#39](https://github.com/anthonycuervo23/bonesay/pull/39)
 - coloring filter options
 - super mode
 
@@ -51,7 +51,7 @@ This is also supported `COWPATH` env. Please read more details in [#33](https://
 
 [![asciicast](https://asciinema.org/a/228213.svg)](https://asciinema.org/a/228213)
 
-## And, Super Cows mode
+## And, Super Bones mode
 
 https://user-images.githubusercontent.com/6500104/140379043-53e44994-b1b0-442e-bda7-4f7ab3aedf01.mov
 
@@ -62,8 +62,8 @@ https://user-images.githubusercontent.com/6500104/140379043-53e44994-b1b0-442e-b
 ### As command
 
 ```
-cow{say,think} version 2.0.0, (c) 2021 codehex
-Usage: bonesay [-bdgpstwy] [-h] [-e eyes] [-f cowfile] [--random]
+bone{say,think} version 2.0.0, (c) 2021 codehex
+Usage: bonesay [-bdgpstwy] [-h] [-e eyes] [-f bonefile] [--random]
       [-l] [-n] [-T tongue] [-W wrapcolumn]
       [--bold] [--rainbow] [--aurora] [--super] [message]
 
@@ -142,9 +142,9 @@ You can download from [here](https://github.com/anthonycuervo23/bonesay/releases
 
     $ go install github.com/anthonycuervo23/bonesay/cmd/v2/bonesay@latest
 
-#### cowthink
+#### bonethink
 
-    $ go install github.com/anthonycuervo23/bonesay/cmd/v2/cowthink@latest
+    $ go install github.com/anthonycuervo23/bonesay/cmd/v2/bonethink@latest
 
 ## License
 

@@ -19,7 +19,7 @@ func TestCLI_Run(t *testing.T) {
 			thinking: false,
 		},
 		{
-			name:     "cowthink",
+			name:     "bonethink",
 			thinking: true,
 		},
 	}
@@ -144,7 +144,7 @@ func TestCLI_Run(t *testing.T) {
 				}
 			})
 
-			t.Run("not found cowfile", func(t *testing.T) {
+			t.Run("not found bonefile", func(t *testing.T) {
 				var stderr bytes.Buffer
 				c := &CLI{
 					Thinking: cli.thinking,
@@ -155,7 +155,7 @@ func TestCLI_Run(t *testing.T) {
 				if exit == 0 {
 					t.Errorf("unexpected exit code: %d", exit)
 				}
-				want := fmt.Sprintf("%s: could not find unknown cowfile\n", cli.name)
+				want := fmt.Sprintf("%s: could not find unknown bonefile\n", cli.name)
 				if want != stderr.String() {
 					t.Errorf("want %q, but got %q", want, stderr.String())
 				}

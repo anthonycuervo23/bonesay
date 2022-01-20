@@ -27,10 +27,10 @@ builds:
       - goos: windows
         goarch: arm
         goarm: 7
-  - id: cowthink
+  - id: bonethink
     dir: cmd
-    main: ./cowthink/main.go
-    binary: cowthink
+    main: ./bonethink/main.go
+    binary: bonethink
     env:
       - CGO_ENABLED=0
     ldflags: -s -w -X main.version={{.Version}}
@@ -59,7 +59,7 @@ builds:
 archives:
 - builds:
   - bonesay
-  - cowthink
+  - bonethink
   name_template: 'bonesay_{{ .Version }}_{{ .Os }}_{{ .Arch }}'
   replacements:
     darwin: macOS
@@ -85,7 +85,7 @@ brews:
   folder: Formula
   install: |
     bin.install "bonesay"
-    bin.install "cowthink"
+    bin.install "bonethink"
     man1.install Dir["doc/bonesay.1"]
 
 nfpms:

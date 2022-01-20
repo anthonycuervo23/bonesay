@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -16,11 +17,11 @@ func init() {
 
 // Say to return bonesay string.
 func Say(phrase string, options ...Option) (string, error) {
-	cow, err := New(options...)
+	bone, err := New(options...)
 	if err != nil {
 		return "", err
 	}
-	return cow.Say(phrase)
+	return bone.Say(phrase)
 }
 
 // LocationType indicates the type of COWPATH.
@@ -34,24 +35,24 @@ const (
 	InDirectory
 )
 
-// CowPath is information of the COWPATH.
-type CowPath struct {
+// BonePath is information of the COWPATH.
+type BonePath struct {
 	// Name is name of the COWPATH.
 	// If you specified `COWPATH=/foo/bar`, Name is `/foo/bar`.
 	Name string
-	// CowFiles are name of the cowfile which are trimmed ".bone" suffix.
-	CowFiles []string
+	// BoneFiles are name of the bonefile which are trimmed ".bone" suffix.
+	BoneFiles []string
 	// LocationType is the type of COWPATH
 	LocationType LocationType
 }
 
-// Lookup will look for the target cowfile in the specified path.
-// If it exists, it returns the cowfile information and true value.
-func (c *CowPath) Lookup(target string) (*CowFile, bool) {
-	for _, cowfile := range c.CowFiles {
-		if cowfile == target {
-			return &CowFile{
-				Name:         cowfile,
+// Lookup will look for the target bonefile in the specified path.
+// If it exists, it returns the bonefile information and true value.
+func (c *BonePath) Lookup(target string) (*BoneFile, bool) {
+	for _, bonefile := range c.BoneFiles {
+		if bonefile == target {
+			return &BoneFile{
+				Name:         bonefile,
 				BasePath:     c.Name,
 				LocationType: c.LocationType,
 			}, true
@@ -60,9 +61,9 @@ func (c *CowPath) Lookup(target string) (*CowFile, bool) {
 	return nil, false
 }
 
-// CowFile is information of the cowfile.
-type CowFile struct {
-	// Name is name of the cowfile.
+// BoneFile is information of the bonefile.
+type BoneFile struct {
+	// Name is name of the bonefile.
 	Name string
 	// BasePath is the path which the cowpath is in.
 	BasePath string
@@ -70,10 +71,10 @@ type CowFile struct {
 	LocationType LocationType
 }
 
-// ReadAll reads the cowfile content.
+// ReadAll reads the bonefile content.
 // If LocationType is InBinary, the file read from binary.
 // otherwise reads from file system.
-func (c *CowFile) ReadAll() ([]byte, error) {
+func (c *BoneFile) ReadAll() ([]byte, error) {
 	joinedPath := filepath.Join(c.BasePath, c.Name+".bone")
 	if c.LocationType == InBinary {
 		return Asset(joinedPath)
@@ -81,22 +82,22 @@ func (c *CowFile) ReadAll() ([]byte, error) {
 	return ioutil.ReadFile(joinedPath)
 }
 
-// Cows to get list of bones
-func Cows() ([]*CowPath, error) {
-	cowPaths, err := cowsFromCowPath()
+// Bones to get list of bones
+func Bones() ([]*BonePath, error) {
+	cowPaths, err := cowsFromBonePath()
 	if err != nil {
 		return nil, err
 	}
-	cowPaths = append(cowPaths, &CowPath{
+	cowPaths = append(cowPaths, &BonePath{
 		Name:         "bones",
-		CowFiles:     CowsInBinary(),
+		BoneFiles:    BonesInBinary(),
 		LocationType: InBinary,
 	})
 	return cowPaths, nil
 }
 
-func cowsFromCowPath() ([]*CowPath, error) {
-	cowPaths := make([]*CowPath, 0)
+func cowsFromBonePath() ([]*BonePath, error) {
+	cowPaths := make([]*BonePath, 0)
 	cowPath := os.Getenv("BONEATH")
 	if cowPath == "" {
 		return cowPaths, nil
@@ -107,27 +108,27 @@ func cowsFromCowPath() ([]*CowPath, error) {
 		if err != nil {
 			return nil, err
 		}
-		path := &CowPath{
+		path := &BonePath{
 			Name:         path,
-			CowFiles:     []string{},
+			BoneFiles:    []string{},
 			LocationType: InDirectory,
 		}
 		for _, entry := range dirEntries {
 			name := entry.Name()
 			if strings.HasSuffix(name, ".bone") {
 				name = strings.TrimSuffix(name, ".bone")
-				path.CowFiles = append(path.CowFiles, name)
+				path.BoneFiles = append(path.BoneFiles, name)
 			}
 		}
-		sort.Strings(path.CowFiles)
+		sort.Strings(path.BoneFiles)
 		cowPaths = append(cowPaths, path)
 	}
 	return cowPaths, nil
 }
 
-// GetCow to get cow's ascii art
-func (cow *Cow) GetCow() (string, error) {
-	src, err := cow.typ.ReadAll()
+// GetBone to get bone's ascii art
+func (bone *Bone) GetBone() (string, error) {
+	src, err := bone.typ.ReadAll()
 	if err != nil {
 		return "", err
 	}
@@ -136,18 +137,24 @@ func (cow *Cow) GetCow() (string, error) {
 		"\\\\", "\\",
 		"\\@", "@",
 		"\\$", "$",
-		"$eyes", cow.eyes,
-		"${eyes}", cow.eyes,
-		"$tongue", cow.tongue,
-		"${tongue}", cow.tongue,
-		"$thoughts", string(cow.thoughts),
-		"${thoughts}", string(cow.thoughts),
+		"$eyes", bone.eyes,
+		"${eyes}", bone.eyes,
+		"$tongue", bone.tongue,
+		"${tongue}", bone.tongue,
+		"$thoughts", string(bone.thoughts),
+		"${thoughts}", string(bone.thoughts),
 	)
 	newsrc := r.Replace(string(src))
 	separate := strings.Split(newsrc, "\n")
 	mow := make([]string, 0, len(separate))
 	for _, line := range separate {
 		if strings.Contains(line, "$the_bone = <<EOB") || strings.HasPrefix(line, "##") {
+			continue
+		}
+
+		if strings.Contains(line, "$ballonOffset = ") {
+			line = strings.TrimPrefix(line, "$ballonOffset = ")
+			bone.balloonOffset, _ = strconv.Atoi(line)
 			continue
 		}
 

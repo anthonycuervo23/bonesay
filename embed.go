@@ -33,8 +33,8 @@ func AssetNames() []string {
 
 var cowsInBinary = AssetNames()
 
-// CowsInBinary returns the list of cowfiles which are in binary.
+// BonesInBinary returns the list of bonefiles which are in binary.
 // the list is memoized.
-func CowsInBinary() []string {
+func BonesInBinary() []string {
 	return cowsInBinary
 }

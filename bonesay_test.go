@@ -12,9 +12,9 @@ import (
 	"github.com/google/go-cmp/cmp/cmpopts"
 )
 
-func TestCows(t *testing.T) {
-	t.Run("no set COWPATH env", func(t *testing.T) {
-		cowPaths, err := Cows()
+func TestBones(t *testing.T) {
+	t.Run("no set BONEPATH env", func(t *testing.T) {
+		cowPaths, err := Bones()
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -22,16 +22,16 @@ func TestCows(t *testing.T) {
 			t.Fatalf("want 1, but got %d", len(cowPaths))
 		}
 		cowPath := cowPaths[0]
-		if len(cowPath.CowFiles) == 0 {
-			t.Fatalf("no cowfiles")
+		if len(cowPath.BoneFiles) == 0 {
+			t.Fatalf("no bonefiles")
 		}
 
-		wantCowPath := &CowPath{
+		wantBonePath := &BonePath{
 			Name:         "bones",
 			LocationType: InBinary,
 		}
-		if diff := cmp.Diff(wantCowPath, cowPath,
-			cmpopts.IgnoreFields(CowPath{}, "CowFiles"),
+		if diff := cmp.Diff(wantBonePath, cowPath,
+			cmpopts.IgnoreFields(BonePath{}, "BoneFiles"),
 		); diff != "" {
 			t.Errorf("(-want, +got)\n%s", diff)
 		}
@@ -43,7 +43,7 @@ func TestCows(t *testing.T) {
 		os.Setenv("COWPATH", cowpath)
 		defer os.Unsetenv("COWPATH")
 
-		cowPaths, err := Cows()
+		cowPaths, err := Bones()
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -51,7 +51,7 @@ func TestCows(t *testing.T) {
 			t.Fatalf("want 2, but got %d", len(cowPaths))
 		}
 
-		wants := []*CowPath{
+		wants := []*BonePath{
 			{
 				Name:         "testdata/testdir",
 				LocationType: InDirectory,
@@ -62,19 +62,19 @@ func TestCows(t *testing.T) {
 			},
 		}
 		if diff := cmp.Diff(wants, cowPaths,
-			cmpopts.IgnoreFields(CowPath{}, "CowFiles"),
+			cmpopts.IgnoreFields(BonePath{}, "BoneFiles"),
 		); diff != "" {
 			t.Errorf("(-want, +got)\n%s", diff)
 		}
 
-		if len(cowPaths[0].CowFiles) != 1 {
-			t.Fatalf("unexpected cowfiles len = %d, %+v",
-				len(cowPaths[0].CowFiles), cowPaths[0].CowFiles,
+		if len(cowPaths[0].BoneFiles) != 1 {
+			t.Fatalf("unexpected bonefiles len = %d, %+v",
+				len(cowPaths[0].BoneFiles), cowPaths[0].BoneFiles,
 			)
 		}
 
-		if cowPaths[0].CowFiles[0] != "test" {
-			t.Fatalf("want %q but got %q", "test", cowPaths[0].CowFiles[0])
+		if cowPaths[0].BoneFiles[0] != "test" {
+			t.Fatalf("want %q but got %q", "test", cowPaths[0].BoneFiles[0])
 		}
 	})
 
@@ -82,7 +82,7 @@ func TestCows(t *testing.T) {
 		os.Setenv("COWPATH", "notfound")
 		defer os.Unsetenv("COWPATH")
 
-		_, err := Cows()
+		_, err := Bones()
 		if err == nil {
 			t.Fatal("want error")
 		}
@@ -90,18 +90,18 @@ func TestCows(t *testing.T) {
 
 }
 
-func TestCowPath_Lookup(t *testing.T) {
-	t.Run("looked for cowfile", func(t *testing.T) {
-		c := &CowPath{
+func TestBonePath_Lookup(t *testing.T) {
+	t.Run("looked for bonefile", func(t *testing.T) {
+		c := &BonePath{
 			Name:         "basepath",
-			CowFiles:     []string{"test"},
+			BoneFiles:    []string{"test"},
 			LocationType: InBinary,
 		}
 		got, ok := c.Lookup("test")
 		if !ok {
 			t.Errorf("want %v", ok)
 		}
-		want := &CowFile{
+		want := &BoneFile{
 			Name:         "test",
 			BasePath:     "basepath",
 			LocationType: InBinary,
@@ -112,13 +112,13 @@ func TestCowPath_Lookup(t *testing.T) {
 		}
 	})
 
-	t.Run("no cowfile", func(t *testing.T) {
-		c := &CowPath{
+	t.Run("no bonefile", func(t *testing.T) {
+		c := &BonePath{
 			Name:         "basepath",
-			CowFiles:     []string{"test"},
+			BoneFiles:    []string{"test"},
 			LocationType: InBinary,
 		}
-		got, ok := c.Lookup("no cowfile")
+		got, ok := c.Lookup("no bonefile")
 		if ok {
 			t.Errorf("want %v", !ok)
 		}
@@ -128,8 +128,8 @@ func TestCowPath_Lookup(t *testing.T) {
 	})
 }
 
-func TestCowFile_ReadAll(t *testing.T) {
-	fromTestData := &CowFile{
+func TestBoneFile_ReadAll(t *testing.T) {
+	fromTestData := &BoneFile{
 		Name:         "test",
 		BasePath:     filepath.Join("testdata", "testdir"),
 		LocationType: InDirectory,
@@ -139,7 +139,7 @@ func TestCowFile_ReadAll(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	fromBinary := &CowFile{
+	fromBinary := &BoneFile{
 		Name:         "default",
 		BasePath:     "bones",
 		LocationType: InBinary,
@@ -199,7 +199,7 @@ func TestSay(t *testing.T) {
 			args: args{
 				phrase: "error",
 				options: []Option{
-					func(*Cow) error {
+					func(*Bone) error {
 						return errors.New("error")
 					},
 				},
