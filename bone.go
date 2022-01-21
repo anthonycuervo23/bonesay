@@ -27,11 +27,11 @@ func New(options ...Option) (*Bone, error) {
 		tongue:   "  ",
 		thoughts: '/',
 		typ: &BoneFile{
-			Name:         "default",
+			Name:         "mobile",
 			BasePath:     "bones",
 			LocationType: InBinary,
 		},
-		ballonWidth: 40,
+		ballonWidth: 15,
 	}
 	for _, o := range options {
 		if err := o(bone); err != nil {
